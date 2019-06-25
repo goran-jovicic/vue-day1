@@ -3,15 +3,15 @@
     <form @submit.prevent="addContact">
       <div>
         <label for="firstName">First Name : </label>
-        <input type="text" id="firstName" v-model="newContact.firstName"/>
+        <input type="text" id="firstName" v-model="newContact.firstName" required/>
       </div>
       <div>
         <label for="lastName">Last Name : </label>
-        <input type="text" id="lastName" v-model="newContact.lastName"/>
+        <input type="text" id="lastName" v-model="newContact.lastName" required/>
       </div>
       <div>
         <label for="email">Email : </label>
-        <input type="text" id="email" v-model="newContact.email"/>
+        <input type="text" id="email" v-model="newContact.email" required/>
       </div>
       <div>
         <button type="submit">Add contact</button>
@@ -20,6 +20,7 @@
     <ul>
       <li v-for="(contact,index) in contacts" :key="index">
         {{ contact.firstName }} {{ contact.lastName }} - {{ contact.email }} 
+        <button @click="deleteContact(index)">Delete</button>
       </li>
     </ul>
   </div>
@@ -44,11 +45,40 @@ export default {
   },
 
   methods : {
+    
     addContact () {
       this.contacts.push({...this.newContact})
+      this.newContact = {
+        email: '',
+        firstName: '',
+        lastName: ''
+      }
+    },
+
+    deleteContact (index) {
+      this.contacts.splice(index,1)
     }
   }
 }
+
+    // methods: {
+    //     getDefaults () {
+    //       return {
+    //         email: '',
+    //         firstName: '',
+    //         lastName: ''
+    //       }
+    //     },
+
+    //     addContact () {
+    //       this.contacts.push({ ...this.newContact })
+
+    // Object.keys(this.newContact).forEach(key => {
+    //       //   this.newContact[key] = ''
+    //       // })
+
+    //       this.newContact = this.getDefaults()
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
