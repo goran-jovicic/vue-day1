@@ -9,8 +9,8 @@ import ContactList from '@/components/ContactList'
 import SingleContact from '@/components/SingleContact'
 
 const routes = [
-  { path: '/contacts', component: ContactList},
   { path: '/add-contact', component: ContactForm},
+  { path: '/contacts', component: ContactList},
   { path: '/contact/:id', component: SingleContact}
 ]
 
