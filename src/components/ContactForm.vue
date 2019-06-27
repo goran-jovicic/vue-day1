@@ -40,12 +40,11 @@ export default {
     handleAdd () {
       this.$emit('add-contact', this.newContact)
       this.newContact = this.getDefaults()
-    },
-
+    }
   }
 }
 </script>
 
 <style>
-  
+
 </style>

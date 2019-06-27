@@ -1,11 +1,11 @@
 <template>
   <div>
-    <ContactForm @add-contact="addContact"/>
+    <!-- <ContactForm @add-contact="addContact" /> -->
     <ul>
-      <li v-for="(contact,index) in contacts" :key="index">
-        <SingleContact 
-          :contact="contact" 
-          @delete-contact="deleteContact(index)"
+      <li v-for="(item, index) in contacts" :key="index">
+        <SingleContact
+          :contact="item"
+          @delete-contact="handleDelete(index)"
         />
       </li>
     </ul>
@@ -13,45 +13,24 @@
 </template>
 
 <script>
-import ContactForm from './ContactForm'
 import SingleContact from './SingleContact'
+// import ContactForm from './ContactForm'
+// import ContactForm from '@/components/ContactForm'
 
 export default {
+  props: ['contacts'],
+
   components: {
-    ContactForm,
-    SingleContact,
+    // ContactForm,
+    SingleContact
   },
 
-  data(){
-    return {
-      contacts : [
-        { firstName: 'John', lastName: 'Doe', email: 'johndoe@example.com' },
-        { firstName: 'John', lastName: 'James', email: 'johnjames@example.com' },
-        { firstName: 'Marco', lastName: 'Tribiani', email: 'marcotribiani@example.com' },
-      ]
+  methods:{
+ 
+    handleDelete(index) {
+      this.$emit('delete-contact', index)
     }
-  },
 
-  methods : {
-    
-    addContact (contact) {
-      this.contacts.push({...contact})
-    },
-
-    deleteContact (index) {
-      this.contacts.splice(index,1)
-    }
   }
 }
-
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-ul {
-  list-style-type: none;
-}
-
-
-</style>

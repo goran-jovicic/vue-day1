@@ -1,28 +1,45 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <ContactList msg="Welcome to Your Vue.js App"/>
+  <div>
+    <nav>
+      <router-link to="/contacts">Contacts </router-link>
+      <router-link to="/add-contact">Add Contact </router-link>
+    </nav>
+    <router-view 
+      :contacts="contacts"
+      @add-contact="addContact"
+      @delete-contact="deleteContact"
+    />
   </div>
 </template>
 
+
 <script>
-import ContactList from './components/ContactList.vue'
 
 export default {
   name: 'app',
-  components: {
-    ContactList
+
+  data () {
+    return {
+      contacts : [
+        { firstName: 'John', lastName: 'Doe', email: 'johndoe@example.com' },
+        { firstName: 'John', lastName: 'James', email: 'johnjames@example.com' },
+        { firstName: 'Marco', lastName: 'Tribiani', email: 'marcotribiani@example.com' },
+      ]
+    }
+  },
+
+  methods : {
+    addContact (contact) {
+      this.contacts.push({...contact})
+    },
+
+    deleteContact (index) {
+      this.contacts.splice(index,1)
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
