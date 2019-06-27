@@ -6,15 +6,18 @@ Vue.use(VueRouter)
 
 import ContactForm from '@/components/ContactForm'
 import ContactList from '@/components/ContactList'
+import SingleContact from '@/components/SingleContact'
 
 const routes = [
   { path: '/contacts', component: ContactList},
-  { path: '/add-contact', component: ContactForm}
+  { path: '/add-contact', component: ContactForm},
+  { path: '/contact/:id', component: SingleContact}
 ]
 
 const router = new VueRouter({
   routes: routes,
-  mode: 'history'
+  mode: 'history',
+  linkActiveClass: 'test'
 })
 
 Vue.config.productionTip = false

@@ -1,6 +1,8 @@
 <template>
   <div>
-		{{ fullName }} - {{ contact.email }} 
+		<router-link :to="routeToContact">
+		{{ fullName }} - {{ contact.email }}
+		</router-link> 
 		<button @click="handleDelete">Delete</button>
 		<input type="number" v-model="age"/>
   </div>
@@ -10,6 +12,7 @@
 export default {
 	props: ['contact'],
 	
+	
 	data () {
 		return {
 			age: 25
@@ -18,14 +21,20 @@ export default {
 
 	methods : {
 		handleDelete () {
-			// console.log(this.fullName)
 			this.$emit('delete-contact')
 		}
 	},
 	
 	computed : {
 		fullName () {
+			if(!this.contact){
+				return ''
+			}
 			return `${this.contact.firstName} ${this.contact.lastName}`
+		},
+
+		routeToContact () {
+			return `/contact/${this.contact.id}`
 		}
 	},
 
