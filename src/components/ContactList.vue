@@ -1,41 +1,29 @@
 <template>
   <div>
-    <form @submit.prevent="addContact">
-      <div>
-        <label for="firstName">First Name : </label>
-        <input type="text" id="firstName" v-model="newContact.firstName" required/>
-      </div>
-      <div>
-        <label for="lastName">Last Name : </label>
-        <input type="text" id="lastName" v-model="newContact.lastName" required/>
-      </div>
-      <div>
-        <label for="email">Email : </label>
-        <input type="text" id="email" v-model="newContact.email" required/>
-      </div>
-      <div>
-        <button type="submit">Add contact</button>
-      </div>
-    </form>
+    <ContactForm @add-contact="addContact"/>
     <ul>
       <li v-for="(contact,index) in contacts" :key="index">
-        {{ contact.firstName }} {{ contact.lastName }} - {{ contact.email }} 
-        <button @click="deleteContact(index)">Delete</button>
+        <SingleContact 
+          :contact="contact" 
+          @delete-contact="deleteContact(index)"
+        />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import ContactForm from './ContactForm'
+import SingleContact from './SingleContact'
+
 export default {
+  components: {
+    ContactForm,
+    SingleContact,
+  },
+
   data(){
     return {
-      newContact: {
-        firstName: '',
-        lastName: '',
-        email: ''
-      },
-
       contacts : [
         { firstName: 'John', lastName: 'Doe', email: 'johndoe@example.com' },
         { firstName: 'John', lastName: 'James', email: 'johnjames@example.com' },
@@ -46,13 +34,8 @@ export default {
 
   methods : {
     
-    addContact () {
-      this.contacts.push({...this.newContact})
-      this.newContact = {
-        email: '',
-        firstName: '',
-        lastName: ''
-      }
+    addContact (contact) {
+      this.contacts.push({...contact})
     },
 
     deleteContact (index) {
@@ -60,24 +43,6 @@ export default {
     }
   }
 }
-
-    // methods: {
-    //     getDefaults () {
-    //       return {
-    //         email: '',
-    //         firstName: '',
-    //         lastName: ''
-    //       }
-    //     },
-
-    //     addContact () {
-    //       this.contacts.push({ ...this.newContact })
-
-    // Object.keys(this.newContact).forEach(key => {
-    //       //   this.newContact[key] = ''
-    //       // })
-
-    //       this.newContact = this.getDefaults()
 
 </script>
 
@@ -88,9 +53,5 @@ ul {
   list-style-type: none;
 }
 
-input {
-  border-radius: 0.4rem;
-  margin: 0.2rem;
-}
 
 </style>
